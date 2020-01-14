@@ -1,6 +1,14 @@
 const express = require( 'express' )
+const mongoose = require( 'mongoose' )
 
 const app = express()
+
+mongoose.connect( 'mongodb+srv://jorgeomnistack:OmNiSTACK10@reacketseat-glpu1.mongodb.net/week10?retryWrites=true&w=majority', {
+
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+
+} )
 
 app.use( express.json() ) // Configurando express para atender requisições que tem o corpo no formato json
 
