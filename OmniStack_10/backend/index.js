@@ -8,10 +8,10 @@ const app = express()
 
 // Query Params: request.query ( Filtros, Ordenação, Paginação, ... )
 // Route Params: request.params ( Identificar um recurso na alteração ou remoção )
-// Body:
+// Body: request.body ( Dados para criação ou alteração de um registro )
 
-app.delete( '/users/:id', ( request, response ) => {
-    console.log( request.params )
+app.post( '/users', ( request, response ) => {
+    console.log( request.body )
     return response.json( { message: "Hello OmniStack!!!" } )
 } )
 
