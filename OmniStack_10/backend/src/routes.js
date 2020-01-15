@@ -1,5 +1,6 @@
 const { Router } = require( 'express' )
 const axios = require( 'axios' )
+const Dev = require( './models/Dev.js' )
 
 const routes = Router()
 
@@ -14,9 +15,15 @@ routes.post( '/devs', async ( request, response ) => {
 
     const techsArray = techs.split( ',' ).map( tech => tech.trim() )
 
-    console.log( techsArray )
+    const dev = await Dev.create( {
+        github_username,
+        name,
+        avatar_url,
+        bio,
+        techs: techsArray
+    } )
 
-    return response.json( { message: "Hello OmniStack!!!" } )
+    return response.json( dev )
 } )
 
 module.exports = routes
