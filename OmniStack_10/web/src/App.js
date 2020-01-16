@@ -3,6 +3,8 @@ import React from 'react';
 import './global.css'
 import './App.css'
 import './Sidebar.css'
+import './Main.css'
+
 
 
 
@@ -38,7 +40,55 @@ function App() {
           </form>
       </aside>
       <main>
+        <ul>
+          <li className="dev-item">
+            <header>
+              <img src="https://avatars2.githubusercontent.com/u/56704254?s=400&v=4" alt="Jorge Alegretti"/>
+              <div className="user-info">
+                <strong>Jorge Alegretti</strong>
+                <span>ReactJS, React Native, Node.js</span>
+              </div>
+            </header>
+            <p>Your name may appear around GitHub where you contribute or are mentioned. You can remove it at any time.</p>
+            <a href="https://github.com/jorge-lba">Acessar perfil no Github</a>
+          </li>
 
+          <li className="dev-item">
+            <header>
+              <img src="https://avatars2.githubusercontent.com/u/56704254?s=400&v=4" alt="Jorge Alegretti"/>
+              <div className="user-info">
+                <strong>Jorge Alegretti</strong>
+                <span>ReactJS, React Native, Node.js</span>
+              </div>
+            </header>
+            <p>Your name may appear around GitHub where you contribute or are mentioned. You can remove it at any time.</p>
+            <a href="https://github.com/jorge-lba">Acessar perfil no Github</a>
+          </li>
+
+          <li className="dev-item">
+            <header>
+              <img src="https://avatars2.githubusercontent.com/u/56704254?s=400&v=4" alt="Jorge Alegretti"/>
+              <div className="user-info">
+                <strong>Jorge Alegretti</strong>
+                <span>ReactJS, React Native, Node.js</span>
+              </div>
+            </header>
+            <p>Your name may appear around GitHub where you contribute or are mentioned. You can remove it at any time.</p>
+            <a href="https://github.com/jorge-lba">Acessar perfil no Github</a>
+          </li>
+
+          <li className="dev-item">
+            <header>
+              <img src="https://avatars2.githubusercontent.com/u/56704254?s=400&v=4" alt="Jorge Alegretti"/>
+              <div className="user-info">
+                <strong>Jorge Alegretti</strong>
+                <span>ReactJS, React Native, Node.js</span>
+              </div>
+            </header>
+            <p>Your name may appear around GitHub where you contribute or are mentioned. You can remove it at any time.</p>
+            <a href="https://github.com/jorge-lba">Acessar perfil no Github</a>
+          </li>
+        </ul>
       </main>
     </div>
   )
