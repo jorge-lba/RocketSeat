@@ -31,13 +31,13 @@ module.exports ={
                 coordinates: [ longitude, latitude ]
             }
     
-                dev = await Dev.create( {
-                github_username,
-                name,
-                avatar_url,
-                bio,
-                techs: techsArray,
-                location
+            dev = await Dev.create( {
+                    github_username,
+                    name,
+                    avatar_url,
+                    bio,
+                    techs: techsArray,
+                    location
             } )
             
             return response.json( dev )
