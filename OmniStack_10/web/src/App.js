@@ -15,6 +15,8 @@ function App() {
 
   async function handleAddDev( e ) {
     e.preventDefault()
+
+    
   }
 
   const geolocation = () => navigator.geolocation.getCurrentPosition(
