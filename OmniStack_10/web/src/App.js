@@ -9,6 +9,8 @@ import './Main.css'
 
 function App() {
 
+  const [ devs, setDevs ] = useState( [] )
+
   const [ github_username, setGithubUsername ] = useState( '' )
   const [ techs, setTechs ] = useState( '' )
   const [ latitude, setLatitude ] = useState( '' )
@@ -25,7 +27,10 @@ function App() {
       }
     )
 
-    console.log( response )
+    setGithubUsername('')
+    setTechs('')
+
+    setDevs( [ ...devs, response.data ] )
   }
 
   const geolocation = () => navigator.geolocation.getCurrentPosition(
@@ -42,7 +47,18 @@ function App() {
     }
   )
 
+  const loadDev = ( ) => {
+    async function loadDev () {
+        const response = await api.get( '/devs' )
+  
+        setDevs( response.data )
+    }
+    loadDev()
+  } 
+
   useEffect( () => geolocation(), [] )
+
+  useEffect( ( ) => loadDev(), [] )
 
   return( 
     <div id="app">
@@ -83,53 +99,20 @@ function App() {
       </aside>
       <main>
         <ul>
-          <li className="dev-item">
-            <header>
-              <img src="https://avatars2.githubusercontent.com/u/56704254?s=400&v=4" alt="Jorge Alegretti"/>
-              <div className="user-info">
-                <strong>Jorge Alegretti</strong>
-                <span>ReactJS, React Native, Node.js</span>
-              </div>
-            </header>
-            <p>Your name may appear around GitHub where you contribute or are mentioned. You can remove it at any time.</p>
-            <a href="https://github.com/jorge-lba">Acessar perfil no Github</a>
-          </li>
-
-          <li className="dev-item">
-            <header>
-              <img src="https://avatars2.githubusercontent.com/u/56704254?s=400&v=4" alt="Jorge Alegretti"/>
-              <div className="user-info">
-                <strong>Jorge Alegretti</strong>
-                <span>ReactJS, React Native, Node.js</span>
-              </div>
-            </header>
-            <p>Your name may appear around GitHub where you contribute or are mentioned. You can remove it at any time.</p>
-            <a href="https://github.com/jorge-lba">Acessar perfil no Github</a>
-          </li>
-
-          <li className="dev-item">
-            <header>
-              <img src="https://avatars2.githubusercontent.com/u/56704254?s=400&v=4" alt="Jorge Alegretti"/>
-              <div className="user-info">
-                <strong>Jorge Alegretti</strong>
-                <span>ReactJS, React Native, Node.js</span>
-              </div>
-            </header>
-            <p>Your name may appear around GitHub where you contribute or are mentioned. You can remove it at any time.</p>
-            <a href="https://github.com/jorge-lba">Acessar perfil no Github</a>
-          </li>
-
-          <li className="dev-item">
-            <header>
-              <img src="https://avatars2.githubusercontent.com/u/56704254?s=400&v=4" alt="Jorge Alegretti"/>
-              <div className="user-info">
-                <strong>Jorge Alegretti</strong>
-                <span>ReactJS, React Native, Node.js</span>
-              </div>
-            </header>
-            <p>Your name may appear around GitHub where you contribute or are mentioned. You can remove it at any time.</p>
-            <a href="https://github.com/jorge-lba">Acessar perfil no Github</a>
-          </li>
+          { devs.map( dev =>( 
+            <li key={dev._id} className="dev-item">
+              <header>
+                <img src={dev.avatar_url} alt={ dev.name } />
+                <div className="user-info">
+                  <strong>{ dev.nam }</strong>
+                  <span>{dev.techs.join( ', ' )}</span>
+                </div>
+              </header>
+              <p>{dev.bios}</p>
+              <a href={`https://github.com/${dev.github_username}`}>Acessar perfil no Github</a>
+            </li> ) 
+            ) 
+          }    
         </ul>
       </main>
     </div>
