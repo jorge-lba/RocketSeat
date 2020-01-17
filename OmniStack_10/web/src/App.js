@@ -6,6 +6,7 @@ import './App.css'
 import './Sidebar.css'
 import './Main.css'
 
+import DevItem from './components/DevItem'
 
 function App() {
 
@@ -99,20 +100,7 @@ function App() {
       </aside>
       <main>
         <ul>
-          { devs.map( dev =>( 
-            <li key={dev._id} className="dev-item">
-              <header>
-                <img src={dev.avatar_url} alt={ dev.name } />
-                <div className="user-info">
-                  <strong>{ dev.nam }</strong>
-                  <span>{dev.techs.join( ', ' )}</span>
-                </div>
-              </header>
-              <p>{dev.bios}</p>
-              <a href={`https://github.com/${dev.github_username}`}>Acessar perfil no Github</a>
-            </li> ) 
-            ) 
-          }    
+          { devs.map( dev => <DevItem key={ dev._id } dev={dev} /> ) }    
         </ul>
       </main>
     </div>
