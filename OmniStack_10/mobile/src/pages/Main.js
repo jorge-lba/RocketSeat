@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Image } from 'react-native'
-import MapView, { Marker } from 'react-native-maps'
+import { StyleSheet, Image, View, Text } from 'react-native'
+import MapView, { Marker, Callout } from 'react-native-maps'
 import { requestPermissionsAsync, getCurrentPositionAsync } from 'expo-location'
 
 function Main ( ) {
@@ -41,6 +41,14 @@ function Main ( ) {
         < MapView  initialRegion={ currentRegion } style={ styles.map } >
             < Marker  coordinate={ { latitude: -23.5255981, longitude: -47.4919055 } }> 
                 <Image style={ styles.avatar } source={ { uri: 'https://avatars2.githubusercontent.com/u/56704254?s=400&v=4' } } />
+
+                <Callout>
+                    <View style={ styles.callout } >
+                        <Text style={ styles.devName }>Jorge Alegretti</Text>
+                        <Text style={ styles.devBio }>CTO na @Rocketseat. Apaixonado pelas melhores tecnologias de desenvolvimento web e mobile.</Text>
+                        <Text style={ styles.devTechs }>Javascript, ReactJS, React Native, Node.js</Text>
+                    </View>
+                </Callout>
             </ Marker>
         </ MapView>
     )
@@ -52,12 +60,29 @@ const styles = StyleSheet.create( {
     },
     
     avatar:{
-        width: 34,
-        height: 34,
+        width: 56,
+        height: 56,
         borderRadius: 4,
         borderWidth: 3,
         borderColor: '#454687',
-    }
+    },
+
+    callout: {
+        width: 260,
+    },
+    devName: {
+        fontWeight: 'bold',
+        fontSize: 16
+    },
+
+    devBio: {
+        color: '#666',
+        marginTop: 5
+    },
+
+    devTechs: {
+        marginTop:5
+    },
 } )
 
 export default Main
