@@ -3,7 +3,7 @@ import { StyleSheet, Image, View, Text } from 'react-native'
 import MapView, { Marker, Callout } from 'react-native-maps'
 import { requestPermissionsAsync, getCurrentPositionAsync } from 'expo-location'
 
-function Main ( ) {
+function Main ( { navigation } ) {
     
     const [ currentRegion, setCurrentRegion ] = useState( null )
 
@@ -42,7 +42,9 @@ function Main ( ) {
             < Marker  coordinate={ { latitude: -23.5255981, longitude: -47.4919055 } }> 
                 <Image style={ styles.avatar } source={ { uri: 'https://avatars2.githubusercontent.com/u/56704254?s=400&v=4' } } />
 
-                <Callout>
+                <Callout onPress={ () => {
+                    navigation.navigate( 'Profile', { github_username: 'jorge-lba' } )
+                } }>
                     <View style={ styles.callout } >
                         <Text style={ styles.devName }>Jorge Alegretti</Text>
                         <Text style={ styles.devBio }>CTO na @Rocketseat. Apaixonado pelas melhores tecnologias de desenvolvimento web e mobile.</Text>
