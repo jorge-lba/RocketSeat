@@ -160,14 +160,6 @@ const styles = StyleSheet.create( {
         zIndex: 5,
         flexDirection: 'row'
     },
-    searchFrom2: {
-        position:'absolute',
-        bottom: 20,
-        left: 20,
-        right: 20,
-        zIndex: 5,
-        flexDirection: 'row'
-    },
     searchInput: {
         flex: 1,
         height: 50,
