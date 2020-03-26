@@ -1,9 +1,9 @@
 import React from 'react'
 
-function Header() {
+function Header( { children } ) {
     return (
         <header>
-            <h1>Be The Hero</h1>
+            <h1>{ children }</h1>
         </header>
     )
 }
