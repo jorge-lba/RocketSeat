@@ -1,4 +1,4 @@
-.new-incident {
+.new-incident-container {
     width: 100%;
     max-width: 1120px;
     height: 100vh;
@@ -8,7 +8,7 @@
     align-items: center;
     justify-content: center;
 }
-.new-incident .content {
+.new-incident-container .content {
     width: 100%;
     padding: 96px;
     background: #f0f0f5;
@@ -20,28 +20,28 @@
     align-items: center;
 }
 
-.new-incident .content section {
+.new-incident-container .content section {
     width: 100%;
     max-width: 380px;
 
 }
 
-.new-incident .content section h1 {
+.new-incident-container .content section h1 {
     margin: 64px 0 32px;
     font-size: 32px;
 }
 
-.new-incident .content section p {
+.new-incident-container .content section p {
     font-size: 18px;
     color: #737380;
     line-height: 32px;
 }
 
-.new-incident .content form {
+.new-incident-container .content form {
     width: 100%;
     max-width: 450px;
 }
 
-.new-incident .content form input {
+.new-incident-container .content form input {
     margin-top: 8px;
 }
