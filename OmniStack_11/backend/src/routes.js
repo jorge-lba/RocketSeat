@@ -8,7 +8,11 @@ const SessionController = require( './controlles/SessionController' )
 
 const routes = express.Router()
 
-routes.post( '/sessions', SessionController.create  )
+routes.post( '/sessions', celebrate({
+    [ Segments.BODY ]: Joi.object().keys({
+        id: Joi.string().required().length(8),
+    })
+}), SessionController.create  )
 
 routes.get( '/ongs', OngController.index )
 
