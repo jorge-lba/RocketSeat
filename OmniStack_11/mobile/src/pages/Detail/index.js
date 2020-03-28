@@ -1,16 +1,39 @@
 import React from 'react'
 import { Feather } from '@expo/vector-icons'
 import { View, Image, Text, TouchableOpacity } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
+import * as MailComposer from 'expo-mail-composer'
 
 import styles from './styles'
 import logoImg from '../../assets/logo.png'
 
 function Detail() {
+
+    const navigation = useNavigation()
+    const message = 'Olá APAD, estou entrando em contato pois gostaria de ajudar no caso "Cachorro atropelado" com o valor de R$120,00'
+
+    function navigateBack() {
+        navigation.goBack()
+    }
+
+    function sendEmail() {
+        MailComposer.composeAsync( {
+            subject: 'Heró do caso: Cachorro atropelado',
+            recipients: ['jorgeShawee@gmail.com'],
+            body: message,
+            
+        } )
+    }
+
+    function sendWhatsapp() {
+
+    }
+
     return (
         <View style={ styles.container } >
             <View style={ styles.header }>
                 <Image source={ logoImg } />
-                <TouchableOpacity onPress={ () => {} }>
+                <TouchableOpacity onPress={ navigateBack }>
                     <Feather name="arrow-left" size={ 28 } color="#E82041" />
                 </TouchableOpacity>
             </View>
@@ -37,7 +60,7 @@ function Detail() {
                     <TouchableOpacity style={ styles.action } onPress={ () => {} } >
                         <Text style={ styles.actionText }>Whatsapp</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={ styles.action } onPress={ () => {} } >
+                    <TouchableOpacity style={ styles.action } onPress={ sendEmail } >
                         <Text style={ styles.actionText }>E-mail</Text>
                     </TouchableOpacity>
                 </View>
