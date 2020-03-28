@@ -1,3 +1,4 @@
+const { celebrate, Segments, Joi } = require( 'celebrate' )
 const express = require( 'express' )
 
 const OngController = require( './controlles/OngController' )
