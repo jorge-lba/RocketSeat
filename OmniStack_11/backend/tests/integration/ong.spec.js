@@ -2,29 +2,30 @@ const request = require( 'supertest' )
 const app = require( '../../src/app' )
 const connection = require( '../../src/database/connection' )
 
-describe( 'ONG', () => {
 
-    const data = {
-        send:{
-            ong:{
-                name:"TDD",
-                email:"contato@tdd.com",
-                whatsapp:"47000000000",
-                city:"Rio do Sul",
-                uf:"SC"
-            }
-        },
-        response:{
-            ong_id: '',
+const data = {
+    send:{
+        ong:{
+            name:"TDD",
+            email:"contato@tdd.com",
+            whatsapp:"47000000000",
+            city:"Rio do Sul",
+            uf:"SC"
         }
+    },
+    response:{
+        ong_id: '',
     }
+}
+
+describe( 'ONG', () => {
 
     beforeEach( async () => {
         await connection.migrate.rollback()
         await connection.migrate.latest()
     } )
 
-    afterAll( async () => await connection.destroy() )
+    // afterAll( async () => await connection.destroy() )
 
     it( 'should be able to create a new ONG', async () => {
         const response = await request( app )
@@ -35,6 +36,47 @@ describe( 'ONG', () => {
         expect( response.body.id ).toHaveLength( 8 )
 
         data.response.ong_id = response.body.id
+    } )
+
+} )
+
+describe( 'ONG_GET', () => {
+
+    afterAll( async () => await connection.destroy() )
+
+    it( 'must contain the same ONG that was registered', async () => {
+        const response = await request( app )
+            .get( '/ongs' )
+
+        const { ...ong } = response.body[0]
+
+        function testKeys( ongSend, ongResponse ) {
+            const keysSend = Object.keys( ongSend )
+            const keysResponse = Object.keys( ongResponse )
+
+            expect( keysResponse[0] ).toBe( 'id' )
+
+            keysSend.forEach( ( key, index ) => {
+                expect( key ).toBe( keysResponse[ index + 1 ] )
+            } )
+        }
+
+        function testValue( ongSend, ongResponse ){
+            const valuesSend = Object.values( ongSend )
+            const valuesResponse = Object.values( ongResponse )
+            
+            expect( typeof valuesResponse[0] ).toBe( 'string' )
+            expect( valuesResponse[0] ).toHaveLength( 8 )
+
+            valuesSend.forEach( ( value, index ) => {
+                expect( value ).toBe( valuesResponse[ index + 1 ] )
+            } )
+
+        }
+
+        testKeys( data.send.ong, ong )
+        testValue( data.send.ong, ong )
+
     } )
 
 } )
