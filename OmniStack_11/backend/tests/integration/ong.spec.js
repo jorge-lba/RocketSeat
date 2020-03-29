@@ -4,6 +4,21 @@ const connection = require( '../../src/database/connection' )
 
 describe( 'ONG', () => {
 
+    const data = {
+        send:{
+            ong:{
+                name:"TDD",
+                email:"contato@tdd.com",
+                whatsapp:"47000000000",
+                city:"Rio do Sul",
+                uf:"SC"
+            }
+        },
+        response:{
+            ong_id: '',
+        }
+    }
+
     beforeEach( async () => {
         await connection.migrate.rollback()
         await connection.migrate.latest()
@@ -14,16 +29,12 @@ describe( 'ONG', () => {
     it( 'should be able to create a new ONG', async () => {
         const response = await request( app )
             .post( '/ongs' )
-            .send({
-                name:"TDD",
-                email:"contato@tdd.com",
-                whatsapp:"47000000000",
-                city:"Rio do Sul",
-                uf:"SC"
-            })
+            .send( data.send.ong )
         
         expect( response.body ).toHaveProperty( 'id' )
         expect( response.body.id ).toHaveLength( 8 )
+
+        data.response.ong_id = response.body.id
     } )
 
 } )
