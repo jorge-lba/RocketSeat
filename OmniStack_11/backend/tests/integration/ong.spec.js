@@ -42,8 +42,6 @@ describe( 'ONG', () => {
 
 describe( 'ONG_GET', () => {
 
-    afterAll( async () => await connection.destroy() )
-
     it( 'must contain the same ONG that was registered', async () => {
         const response = await request( app )
             .get( '/ongs' )
@@ -77,6 +75,20 @@ describe( 'ONG_GET', () => {
         testKeys( data.send.ong, ong )
         testValue( data.send.ong, ong )
 
+    } )
+
+} )
+
+describe( 'ONG_LOGIN', () => {
+
+    afterAll( async () => await connection.destroy() )
+
+    it( 'must return the name of the registered ONG', async () => {
+        const response = await request( app )
+            .post( '/sessions' )
+            .send( { id: data.response.ong_id} )
+
+        expect( response.body.name ).toBe( data.send.ong.name )
     } )
 
 } )
