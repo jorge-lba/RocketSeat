@@ -154,8 +154,22 @@ describe( 'INCIDENTS_LIST', () => {
             } )
         }
 
+        function testValues( ongSend, incidentSend, incidentResponse ){
+            const valuesOngSend = Object.values( ongSend )
+            const valuesIncidentSend = Object.values( incidentSend )
+            const valuesResponse = Object.values( incidentResponse )
+
+            const valueSSend = [ incidentResponse.id, ...valuesIncidentSend, data.response.ong_id,...valuesOngSend ]
+
+            valueSSend.forEach( ( value, index ) => {
+                expect( value ).toBe( valuesResponse[ index ] )
+            } )
+        }
+
         for( let i = 0; i < respose.body.length; i++ ){
             testKeys( data.send.ong, data.send.incident, respose.body[ i ] )
+            testValues( data.send.ong, data.send.incident, respose.body[ i ] )
+
         }
 
     } )
