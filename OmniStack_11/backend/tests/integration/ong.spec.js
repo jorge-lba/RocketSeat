@@ -20,6 +20,7 @@ const data = {
     },
     response:{
         ong_id: '',
+        incident_id: Number,
     }
 }
 
@@ -98,8 +99,6 @@ describe( 'ONG_LOGIN', () => {
 
 describe( 'INCIDENT_CREATE', () => {
 
-    afterAll( async () => await connection.destroy() )
-
     it( 'should be able to create a new INCIDENT', async () => {
         const response = await request( app )
             .post( '/incidents' )
@@ -109,8 +108,41 @@ describe( 'INCIDENT_CREATE', () => {
         expect( response.body ).toHaveProperty( 'id' )
         expect( typeof response.body.id ).toBe( 'number' )
 
+        data.response.incident_id = response.body.id
+
     } )
 
 } )
 
 
+
+describe( 'INCIDENTS_LIST', () => {
+
+    afterAll( async () => await connection.destroy() )
+
+    it( 'must return the registered incident by the ONG', async () => {
+        const respose = await request( app )
+            .get( '/incidents' )
+            .set( 'authorization', data.response.ong_id )
+
+        function testKeys( ongSend, incidentSend, incidentResponse ){
+            const keysOngSend = Object.keys( ongSend )
+            const keysIncidentSend = Object.keys( incidentSend )
+            const keysResponse = Object.keys( incidentResponse )
+
+            const keysSend = [ 'id', ...keysIncidentSend, 'ong_id',...keysOngSend ]
+
+            keysSend.forEach( ( key, index ) => {
+                expect( key ).toBe( keysResponse[ index ] )
+            } )
+        }
+
+        for( let i = 0; i < respose.body.length; i++ ){
+            testKeys( data.send.ong, data.send.incident, respose.body[ i ] )
+        }
+
+        // console.log( respose.body )
+
+    } )
+
+} )
