@@ -11,6 +11,11 @@ const data = {
             whatsapp:"47000000000",
             city:"Rio do Sul",
             uf:"SC"
+        },
+        incident: {
+            title:"Caso test Validação",
+            description:"Descrição do caso",
+            value:120
         }
     },
     response:{
@@ -81,8 +86,6 @@ describe( 'ONG_GET', () => {
 
 describe( 'ONG_LOGIN', () => {
 
-    afterAll( async () => await connection.destroy() )
-
     it( 'must return the name of the registered ONG', async () => {
         const response = await request( app )
             .post( '/sessions' )
@@ -92,3 +95,22 @@ describe( 'ONG_LOGIN', () => {
     } )
 
 } )
+
+describe( 'INCIDENT_CREATE', () => {
+
+    afterAll( async () => await connection.destroy() )
+
+    it( 'should be able to create a new INCIDENT', async () => {
+        const response = await request( app )
+            .post( '/incidents' )
+            .set( 'authorization', data.response.ong_id )
+            .send( data.send.incident )
+        
+        expect( response.body ).toHaveProperty( 'id' )
+        expect( typeof response.body.id ).toBe( 'number' )
+
+    } )
+
+} )
+
+
