@@ -2,6 +2,7 @@ const request = require( 'supertest' )
 const app = require( '../../src/app' )
 const connection = require( '../../src/database/connection' )
 
+jest.setTimeout(40000)
 
 const data = {
     send:{
@@ -21,10 +22,11 @@ const data = {
     response:{
         ong_id: '',
         incident_id: Number,
+        incidents_total: Number,
     }
 }
 
-const NUMBER_INCIDENTS_CREATE = 20
+const NUMBER_INCIDENTS_CREATE = 24         // Variavel testada com o valor 197, para valores maiores configure o jest.setTimeout
 
 describe( 'ONG', () => {
 
@@ -118,7 +120,7 @@ describe( 'INCIDENT_CREATE', () => {
 
 describe( 'INCIDENT_CREATE_MULT', () => {
 
-    it( 'should be able to create a new INCIDENT', async () => {
+    it( 'should be able to create mult new INCIDENT', async () => {
 
         for( let i = 0; i < NUMBER_INCIDENTS_CREATE-1; i++ ){
             const response = await request( app )
@@ -129,6 +131,8 @@ describe( 'INCIDENT_CREATE_MULT', () => {
             expect( response.body ).toHaveProperty( 'id' )
             expect( typeof response.body.id ).toBe( 'number' )
 
+            data.response.incidents_total = i+2
+
         }
 
     } )
@@ -138,8 +142,13 @@ describe( 'INCIDENT_CREATE_MULT', () => {
 describe( 'INCIDENTS_LIST', () => {
 
     it( 'must return the registered all incidents', async () => {
-        const respose = await request( app )
-            .get( '/incidents' )
+
+        const incidentsTotal = data.response.incidents_total
+
+        const TOTAL_PAGES = (( incidents = incidentsTotal ) => {
+            const page = parseInt( incidents / 5 ) 
+            return ( incidents % page ) > 0 ? page + 1 : page
+        } )()
 
         function testKeys( ongSend, incidentSend, incidentResponse ){
             const keysOngSend = Object.keys( ongSend )
@@ -165,11 +174,19 @@ describe( 'INCIDENTS_LIST', () => {
             } )
         }
 
-        for( let i = 0; i < respose.body.length; i++ ){
-            testKeys( data.send.ong, data.send.incident, respose.body[ i ] )
-            testValues( data.send.ong, data.send.incident, respose.body[ i ] )
+        for( let page_number = 1; page_number <= TOTAL_PAGES; page_number++ ){
+            const respose = await request( app )
+                .get( '/incidents' )
+                .query( { page: page_number } )
 
+            for( let i = 0; i < respose.body.length; i++ ){
+
+                testKeys( data.send.ong, data.send.incident, respose.body[ i ] )
+                testValues( data.send.ong, data.send.incident, respose.body[ i ] )
+    
+            }
         }
+
 
     } )
 
@@ -179,7 +196,7 @@ describe( 'INCIDENTS_PROFILE', () => {
 
     afterAll( async () => await connection.destroy() )
 
-    it( 'must return the registered all incidents', async () => {
+    it( 'must return the registered all incidents by the ONG', async () => {
         const respose = await request( app )
             .get( '/profile' )
             .set( 'authorization', data.response.ong_id )
