@@ -24,6 +24,8 @@ const data = {
     }
 }
 
+const NUMBER_INCIDENTS_CREATE = 20
+
 describe( 'ONG', () => {
 
     beforeEach( async () => {
@@ -118,7 +120,7 @@ describe( 'INCIDENT_CREATE_MULT', () => {
 
     it( 'should be able to create a new INCIDENT', async () => {
 
-        for( let i = 0; i < 20; i++ ){
+        for( let i = 0; i < NUMBER_INCIDENTS_CREATE-1; i++ ){
             const response = await request( app )
                 .post( '/incidents' )
                 .set( 'authorization', data.response.ong_id )
@@ -173,3 +175,17 @@ describe( 'INCIDENTS_LIST', () => {
 
 } )
 
+describe( 'INCIDENTS_PROFILE', () => {
+
+    afterAll( async () => await connection.destroy() )
+
+    it( 'must return the registered all incidents', async () => {
+        const respose = await request( app )
+            .get( '/profile' )
+            .set( 'authorization', data.response.ong_id )
+
+        expect( respose.body.length).toBe( NUMBER_INCIDENTS_CREATE )
+
+    } )
+
+} )
