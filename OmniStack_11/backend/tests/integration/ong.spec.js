@@ -114,7 +114,24 @@ describe( 'INCIDENT_CREATE', () => {
 
 } )
 
+describe( 'INCIDENT_CREATE_MULT', () => {
 
+    it( 'should be able to create a new INCIDENT', async () => {
+
+        for( let i = 0; i < 20; i++ ){
+            const response = await request( app )
+                .post( '/incidents' )
+                .set( 'authorization', data.response.ong_id )
+                .send( data.send.incident )
+            
+            expect( response.body ).toHaveProperty( 'id' )
+            expect( typeof response.body.id ).toBe( 'number' )
+
+        }
+
+    } )
+
+} )
 
 describe( 'INCIDENTS_LIST', () => {
 
@@ -140,8 +157,6 @@ describe( 'INCIDENTS_LIST', () => {
         for( let i = 0; i < respose.body.length; i++ ){
             testKeys( data.send.ong, data.send.incident, respose.body[ i ] )
         }
-
-        // console.log( respose.body )
 
     } )
 
