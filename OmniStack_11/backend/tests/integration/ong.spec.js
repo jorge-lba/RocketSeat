@@ -194,8 +194,6 @@ describe( 'INCIDENTS_LIST', () => {
 
 describe( 'INCIDENTS_PROFILE', () => {
 
-    afterAll( async () => await connection.destroy() )
-
     it( 'must return the registered all incidents by the ONG', async () => {
         const respose = await request( app )
             .get( '/profile' )
@@ -203,6 +201,25 @@ describe( 'INCIDENTS_PROFILE', () => {
 
         expect( respose.body.length).toBe( NUMBER_INCIDENTS_CREATE )
 
+    } )
+
+} )
+
+describe( 'INCIDENT_DELETE_ALL', () => {
+    
+    afterAll( async () => await connection.destroy() )
+
+    it( 'Delete ALL', async () => {
+        for( let id = 1; id <= NUMBER_INCIDENTS_CREATE; id++ ){
+            await request( app )
+                .delete( `/incidents/${id}` )
+                .set( 'authorization', data.response.ong_id )
+        }
+        const response = await request( app )
+            .get( '/profile' )
+            .set( 'authorization', data.response.ong_id )
+
+        expect( response.body.length ).toBe(0)
     } )
 
 } )
