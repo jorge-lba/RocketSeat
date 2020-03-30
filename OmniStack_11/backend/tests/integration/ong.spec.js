@@ -135,12 +135,9 @@ describe( 'INCIDENT_CREATE_MULT', () => {
 
 describe( 'INCIDENTS_LIST', () => {
 
-    afterAll( async () => await connection.destroy() )
-
-    it( 'must return the registered incident by the ONG', async () => {
+    it( 'must return the registered all incidents', async () => {
         const respose = await request( app )
             .get( '/incidents' )
-            .set( 'authorization', data.response.ong_id )
 
         function testKeys( ongSend, incidentSend, incidentResponse ){
             const keysOngSend = Object.keys( ongSend )
@@ -175,3 +172,4 @@ describe( 'INCIDENTS_LIST', () => {
     } )
 
 } )
+
