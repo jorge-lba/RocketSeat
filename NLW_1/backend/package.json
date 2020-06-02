@@ -1,10 +1,21 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.ts",
   "author": "jorge-lba <jorgeluiz.b.alegretti@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "@types/cors": "^2.8.6",
+    "cors": "^2.8.5",
     "express": "^4.17.1"
+  },
+  "scripts": {
+    "dev": "ts-node-dev src/server.ts"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.6",
+    "@types/node": "^14.0.9",
+    "ts-node-dev": "^1.0.0-pre.44",
+    "typescript": "^3.9.3"
   }
 }
