@@ -1,12 +1,13 @@
-import knex from 'knex'
 import path from 'path'
 
+console.log( path.resolve(__dirname, 'src', 'database', 'migrations'))
 module.exports = {
-    client:'sqlit3',
+    client:'sqlite3',
     connection:{
         filename: path.resolve(__dirname, 'src', 'database', 'database.sqlite')
     },
     migrations: {
-        filename: path.resolve(__dirname, 'src', 'database', 'migrations')
-    }
+        directory: path.resolve(__dirname, 'src', 'database', 'migrations')
+    },
+    useNullAsDefault:true,
 }
